@@ -1,4 +1,9 @@
-
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using TaskTracker.Helpers;
+using TaskTracker.Repositories;
+using TaskTracker.Services;
 namespace TaskTracker
 {
     public class Program
@@ -13,7 +18,34 @@ namespace TaskTracker
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+      builder.Services.AddScoped<UserRepository>();
+      builder.Services.AddScoped<JwtHelper>();
+      builder.Services.AddScoped<AuthService>();
       builder.Services.AddSingleton<Data.DbConnectionFactory>();
+
+      var jwtSettings = builder.Configuration.GetSection("JwtSettings");
+      var secretKey = jwtSettings["SecretKey"]!;
+
+      builder.Services.AddAuthentication(options =>
+      {
+        options.DefaultAuthenticateScheme=JwtBearerDefaults.AuthenticationScheme;
+        options.DefaultChallengeScheme=JwtBearerDefaults.AuthenticationScheme;
+      })
+.AddJwtBearer(options =>
+{
+  options.TokenValidationParameters=new TokenValidationParameters
+  {
+    ValidateIssuer=true,
+    ValidateAudience=true,
+    ValidateLifetime=true,
+    ValidateIssuerSigningKey=true,
+    ValidIssuer=jwtSettings["Issuer"],
+    ValidAudience=jwtSettings["Audience"],
+    IssuerSigningKey=new SymmetricSecurityKey(
+          Encoding.UTF8.GetBytes(secretKey)
+      )
+  };
+});
 
       builder.Services.AddCors(options =>
       {

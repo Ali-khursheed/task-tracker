@@ -9,8 +9,14 @@
 *.user
 *.userosscache
 *.sln.docstates
-appsetting.json
+appsettings.json
 Dependencies/
+
+# Node/Frontend Dependencies
+node_modules/
+jspm_packages/
+.npm/
+.yarn/
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
