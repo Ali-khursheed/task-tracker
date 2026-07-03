@@ -1,6 +1,8 @@
 ﻿
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TaskTracker.Models.Dtos.Auth;
+using TaskTracker.Repositories;
 using TaskTracker.Services;
 namespace TaskTracker.Controllers
 {
@@ -9,10 +11,25 @@ namespace TaskTracker.Controllers
   public class AuthController:ControllerBase
   {
     private readonly AuthService _authService;
+    private readonly UserRepository _userRepo;
 
-    public AuthController(AuthService authService)
+
+    public AuthController(AuthService authService, UserRepository userRepo)
     {
       _authService=authService;
+      _userRepo=userRepo;
+    }
+
+
+
+
+
+    [HttpGet("users")]
+    [Authorize]
+    public async Task<IActionResult> GetUsers()
+    {
+      var users = await _userRepo.GetAllAsync();
+      return Ok(users.Select(u => new { u.Id, u.Username }));
     }
 
     [HttpPost("register")]

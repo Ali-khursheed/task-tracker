@@ -22,6 +22,9 @@ namespace TaskTracker
       builder.Services.AddScoped<JwtHelper>();
       builder.Services.AddScoped<AuthService>();
       builder.Services.AddSingleton<Data.DbConnectionFactory>();
+      builder.Services.AddScoped<TaskRepository>();
+      builder.Services.AddScoped<NotificationRepository>();
+      builder.Services.AddScoped<TaskService>();
 
       var jwtSettings = builder.Configuration.GetSection("JwtSettings");
       var secretKey = jwtSettings["SecretKey"]!;

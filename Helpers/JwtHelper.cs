@@ -20,11 +20,11 @@ namespace TaskTracker.Helpers
       // Claims = data we embed inside the token
       // When a request comes in, we read these without hitting the DB
       var claims = new[]
-            {
+           {
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                 new Claim(ClaimTypes.Name, user.Username),
                 new Claim(ClaimTypes.Email, user.Email)
-            };
+           };
 
       // Sign the token with our secret key
       var key = new SymmetricSecurityKey(
