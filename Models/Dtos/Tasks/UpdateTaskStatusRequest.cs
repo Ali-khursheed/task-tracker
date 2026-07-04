@@ -2,6 +2,6 @@
 {
   public class UpdateTaskStatusRequest
   {
-    public string? NewStatus { get; set; } 
+    public string NewStatus { get; set; } = string.Empty;
   }
 }

@@ -22,8 +22,8 @@ namespace TaskTracker.Services
       {
         Title = request.Title,
         Description = request.Description,
-        Assigner_Id = assignerId,
-        Assignee_Id = request.Assignee_Id,
+        Assigner_ID = assignerId,
+        Assigned_ID = request.Assignee_ID,
         DueDate = request.DueDate,  
         Status = TaskStatusDedo.Assigned,
         CreatedAt = DateTime.UtcNow
@@ -43,7 +43,7 @@ namespace TaskTracker.Services
       // Authorization check — who can do what
       if(newStatus==TaskStatusDedo.Completed)
       {
-        if(task.Assignee_Id!=requestingUserID)
+        if(task.Assigned_ID!=requestingUserID)
         {
                    return(false, "Only the assignee can mark the task as completed.");
         }
@@ -52,14 +52,14 @@ namespace TaskTracker.Services
     else if(newStatus==TaskStatusDedo.Approved)
       {
         // Only assigner can approve
-        if(task.Assigner_Id!=requestingUserID)
+        if(task.Assigner_ID!=requestingUserID)
           return (false, "Only the assigner can approve this task");
       }
 
     else if(newStatus==TaskStatusDedo.InProgress)
       {
         // Only assignee can start progress
-        if(task.Assignee_Id!=requestingUserID)
+        if(task.Assigned_ID!=requestingUserID)
           return (false, "Only the assignee can update this task");
       }
 
@@ -81,7 +81,7 @@ namespace TaskTracker.Services
       {
         // Notify assigner that work is done
         await _notifRepo.CreateAsync(
-            task.Assigner_Id,
+            task.Assigner_ID,
             taskId,
             $"Task '{task.Title}' has been marked as completed by assignee."
         );
@@ -91,7 +91,7 @@ namespace TaskTracker.Services
       {
         // Notify assignee that work is approved
         await _notifRepo.CreateAsync(
-            task.Assignee_Id,
+            task.Assigned_ID,
             taskId,
             $"Your work on task '{task.Title}' has been approved!"
         );

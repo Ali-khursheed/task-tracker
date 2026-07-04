@@ -12,8 +12,8 @@
     // We show names, not just IDs — friendlier for frontend
     public string ?AssignerUsername { get; set; }
     public string ?AssigneeUsername { get; set; }
-    public int Assigner_Id { get; set; }
-    public int Assignee_Id { get; set; }
+    public int Assigner_ID { get; set; }
+    public int Assigned_ID { get; set; }
 
   }
 }

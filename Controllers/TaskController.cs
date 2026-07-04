@@ -28,7 +28,7 @@ namespace TaskTracker.Controllers
     }
 
     [HttpPost]
-    public async Task<IActionResult> CreateTask(CreateTaskRequest request)
+    public async Task<IActionResult> CreateTask([FromBody] CreateTaskRequest request)
     {
       var assignerId = GetCurrentUserId();
       var taskId = await _taskService.CreateTaskAsync(request, assignerId);
@@ -53,7 +53,7 @@ namespace TaskTracker.Controllers
     }
 
     [HttpPatch("{id}/status")]
-    public async Task<IActionResult> UpdateStatus(int id, UpdateTaskStatusRequest request)
+    public async Task<IActionResult> UpdateStatus(int id, [FromBody] UpdateTaskStatusRequest request)
     {
       var userId = GetCurrentUserId();
       var (success, message)=await _taskService.UpdateStatusAsync(id, request.NewStatus, userId);

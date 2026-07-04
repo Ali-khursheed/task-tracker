@@ -8,6 +8,7 @@ namespace TaskTracker.Repositories
   public class UserRepository
   {
     private readonly DbConnectionFactory _db;
+
     public UserRepository(DbConnectionFactory db)
     {
       _db=db;

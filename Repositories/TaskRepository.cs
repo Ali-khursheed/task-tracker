@@ -17,9 +17,9 @@ namespace TaskTracker.Repositories
     {
       using var conn = _db.CreateConnection();
       var sql = @"
-                INSERT INTO Tasks (Title, Description, AssignerId, AssigneeId, Status, DueDate, CreatedAt)
+                INSERT INTO Tasks (Title, Description, Assigner_Id, Assigned_Id, Status, DueDate, CreatedAt)
                 OUTPUT INSERTED.Id
-                VALUES (@Title, @Description, @AssignerId, @AssigneeId, @Status, @DueDate, @CreatedAt)";
+                VALUES (@Title, @Description, @Assigner_ID, @Assigned_ID, @Status, @DueDate, @CreatedAt)";
 
       return await conn.ExecuteScalarAsync<int>(sql, task);
     }
@@ -33,12 +33,12 @@ namespace TaskTracker.Repositories
       var sql = @"
                 SELECT 
                     t.Id, t.Title, t.Description, t.Status,
-                    t.DueDate, t.CreatedAt, t.AssignerId, t.AssigneeId,
+                    t.DueDate, t.CreatedAt, t.Assigner_ID, t.Assigned_ID,
                     u1.Username AS AssignerUsername,
                     u2.Username AS AssigneeUsername
                 FROM Tasks t
-                INNER JOIN Users u1 ON t.AssignerId = u1.Id
-                INNER JOIN Users u2 ON t.AssigneeId = u2.Id
+                INNER JOIN Users u1 ON t.Assigner_ID = u1.Id
+                INNER JOIN Users u2 ON t.Assigned_ID = u2.Id
                 WHERE t.Id = @Id";
 
       return await conn.QueryFirstOrDefaultAsync<TaskResponse>(sql, new { Id = id });
@@ -51,13 +51,13 @@ namespace TaskTracker.Repositories
       var sql = @"
                 SELECT 
                     t.Id, t.Title, t.Description, t.Status,
-                    t.DueDate, t.CreatedAt, t.AssignerId, t.AssigneeId,
+                    t.DueDate, t.CreatedAt, t.Assigner_ID, t.Assigned_ID,
                     u1.Username AS AssignerUsername,
                     u2.Username AS AssigneeUsername
                 FROM Tasks t
-                INNER JOIN Users u1 ON t.AssignerId = u1.Id
-                INNER JOIN Users u2 ON t.AssigneeId = u2.Id
-                WHERE t.AssigneeId = @UserId
+                INNER JOIN Users u1 ON t.Assigner_ID = u1.Id
+                INNER JOIN Users u2 ON t.Assigned_ID = u2.Id
+                WHERE t.Assigned_ID = @UserId
                 ORDER BY t.CreatedAt DESC";
 
       return await conn.QueryAsync<TaskResponse>(sql, new { UserId = userId });
@@ -70,13 +70,13 @@ namespace TaskTracker.Repositories
       var sql = @"
                 SELECT 
                     t.Id, t.Title, t.Description, t.Status,
-                    t.DueDate, t.CreatedAt, t.AssignerId, t.AssigneeId,
+                    t.DueDate, t.CreatedAt, t.Assigner_ID, t.Assigned_ID,
                     u1.Username AS AssignerUsername,
                     u2.Username AS AssigneeUsername
                 FROM Tasks t
-                INNER JOIN Users u1 ON t.AssignerId = u1.Id
-                INNER JOIN Users u2 ON t.AssigneeId = u2.Id
-                WHERE t.AssignerId = @UserId
+                INNER JOIN Users u1 ON t.Assigner_ID = u1.Id
+                INNER JOIN Users u2 ON t.Assigned_ID = u2.Id
+                WHERE t.Assigner_ID = @UserId
                 ORDER BY t.CreatedAt DESC";
 
       return await conn.QueryAsync<TaskResponse>(sql, new { UserId = userId });
