@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using TaskTracker.Repositories;
+using TaskTracker.Interfaces;
 namespace TaskTracker.Controllers
 {
   [ApiController]
@@ -9,7 +10,7 @@ namespace TaskTracker.Controllers
   [Authorize]
   public class NotificationController: ControllerBase
   {
-    private readonly NotificationRepository _notifRepo;
+    private readonly INotificationRepository _notifRepo;
 
     public NotificationController(NotificationRepository notifRepo)
     {

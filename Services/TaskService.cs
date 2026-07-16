@@ -1,13 +1,14 @@
-﻿using TaskTracker.Models.Dtos.Tasks;
+﻿using TaskTracker.Interfaces;
+using TaskTracker.Models.Dtos.Tasks;
 using TaskTracker.Models.Entities;
 using TaskTracker.Repositories;
 using TaskTrackerAPI.Helpers;
 
 namespace TaskTracker.Services
 {
-  public class TaskService
+  public class TaskService : ITaskService
   {
-    private readonly TaskRepository _taskRepo;
+    private readonly ITaskRepository _taskRepo;
     private readonly NotificationRepository _notifRepo;
 
     public TaskService(TaskRepository taskRepo, NotificationRepository notifRepo)

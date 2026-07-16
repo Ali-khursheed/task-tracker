@@ -1,11 +1,12 @@
 ﻿using Dapper;
 using TaskTracker.Data;
+using TaskTracker.Interfaces;
 using TaskTracker.Models.Entities;
 
 
 namespace TaskTracker.Repositories
 {
-  public class UserRepository
+  public class UserRepository : IUserRepository
   {
     private readonly DbConnectionFactory _db;
 

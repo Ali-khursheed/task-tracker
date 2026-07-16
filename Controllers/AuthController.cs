@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TaskTracker.Models.Dtos.Auth;
+using TaskTracker.Interfaces;
+
 using TaskTracker.Repositories;
 using TaskTracker.Services;
 namespace TaskTracker.Controllers
@@ -10,8 +12,8 @@ namespace TaskTracker.Controllers
   [Route("api/[controller]")]
   public class AuthController:ControllerBase
   {
-    private readonly AuthService _authService;
-    private readonly UserRepository _userRepo;
+    private readonly IAuthService _authService;
+    private readonly IUserRepository _userRepo;
 
 
     public AuthController(AuthService authService, UserRepository userRepo)

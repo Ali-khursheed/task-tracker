@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using TaskTracker.Models.Dtos.Tasks;
+using TaskTracker.Interfaces;
 using TaskTracker.Services;
 namespace TaskTracker.Controllers
 {
@@ -12,7 +13,7 @@ namespace TaskTracker.Controllers
   [Authorize]
   public class TaskController:ControllerBase
   {
-    private readonly TaskService _taskService;
+    private readonly ITaskService _taskService;
 
     public TaskController(TaskService taskService)
     {

@@ -2,9 +2,10 @@
 using TaskTracker.Data;
 using TaskTracker.Models.Dtos.Tasks;
 using TaskTracker.Models.Entities;
+using TaskTracker.Interfaces;
 namespace TaskTracker.Repositories
 {
-  public class TaskRepository
+  public class TaskRepository : ITaskRepository
   {
     private readonly DbConnectionFactory _db;
 

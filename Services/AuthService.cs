@@ -1,13 +1,14 @@
 ﻿using TaskTracker.Helpers;
+using TaskTracker.Interfaces;
 using TaskTracker.Models.Dtos.Auth;
 using TaskTracker.Models.Entities;
 using TaskTracker.Repositories;
 
 namespace TaskTracker.Services
 {
-  public class AuthService
+  public class AuthService: IAuthService
   {
-    private readonly UserRepository _userRepo;
+    private readonly IUserRepository _userRepo;
     private readonly JwtHelper _jwtHelper;
 
     public AuthService(UserRepository userRepo, JwtHelper jwtHelper)

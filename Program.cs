@@ -3,6 +3,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
 using TaskTracker.Helpers;
+using TaskTracker.Interfaces;
 using TaskTracker.Repositories;
 using TaskTracker.Services;
 namespace TaskTracker
@@ -30,6 +31,12 @@ options.JsonSerializerOptions.PropertyNameCaseInsensitive=true;
       builder.Services.AddScoped<TaskRepository>();
       builder.Services.AddScoped<NotificationRepository>();
       builder.Services.AddScoped<TaskService>();
+
+      builder.Services.AddScoped<IUserRepository, UserRepository>();
+      builder.Services.AddScoped<ITaskRepository, TaskRepository>();
+      builder.Services.AddScoped<INotificationRepository, NotificationRepository>();
+      builder.Services.AddScoped<IAuthService, AuthService>();
+      builder.Services.AddScoped<ITaskService, TaskService>();
       builder.Services.AddSwaggerGen(c =>
       {
         c.SwaggerDoc("v1", new OpenApiInfo { Title="TaskTracker API", Version="v1" });
